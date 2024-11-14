@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw_data
+    database: lab
+    schema: raw_data
+    description: "Schema which stores raw tables (ETL)"
+    tables:
+      - name: market_data
+        identifier: market_data
+        description: "Market data of TSLA past 90 days"

@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: rsi
+    description: "Relative Strength Index, measures magnitude of stock price changes"
+    columns:
+      - name: date
+        description: "Unique identifier for each stock price record"
+        data_tests:
+          - unique
+          - not_null
+  - name: moving_avg_7d
+    description: "7-day moving average window of share value"
+    columns:
+      - name: date
+        description: "Unique identifier for each stock price record"
+        data_tests:
+          - unique
+          - not_null
+  - name: price_momentum
+    description: "Overall direction of share value in a 10-day period"
+    columns:
+      - name: date
+        description: "Unique identifier for each stock price record"
+        data_tests:
+          - unique
+          - not_null
+  - name: stock_summary
+    description: "Analytics model for session data"
+    columns:
+      - name: date
+        description: "Unique identifier for each stock price record"
+        data_tests:
+          - unique
+          - not_null
+        
