@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw_data
+    database: lab
+    schema: raw_data
+    description: "Schema which stores raw tables (ETL)"
+    tables:
+      - name: market_data
+        identifier: market_data
+        description: "Session data including --"
+  - name: analytics
+    database: lab
+    schema: analytics
+    description: "Schema with stores analytics tables (ELT)"
+    tables:
+      - name: rsi_values
+        identifier: rsi_values
+        description: "Complete session info"
