@@ -1,5 +1,4 @@
 {% snapshot snapshot_stock_summary %}
-
 {{
   config(
     target_schema='snapshot',
@@ -9,7 +8,5 @@
     invalidate_hard_deletes=True
   )
 }}
-
 SELECT * FROM {{ ref('stock_summary') }}
-
 {% endsnapshot %}

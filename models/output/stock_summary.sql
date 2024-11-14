@@ -11,4 +11,4 @@ SELECT t1.date, t1.rsi, t2.moving_avg_7_days, t3.momentum_10_days
 FROM rsi t1
 JOIN moving_avg_7d t2 ON t1.date = t2.date
 JOIN price_momentum t3 ON t1.date = t3.date
-ORDER BY t1.date
+ORDER BY t1.date 

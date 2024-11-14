@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: rsi
-    description: "Analytics model for session data"
+    description: "Relative Strength Index, measures magnitude of stock price changes"
     columns:
       - name: date
         description: "Unique identifier for each stock price record"
@@ -10,7 +10,7 @@ models:
           - unique
           - not_null
   - name: moving_avg_7d
-    description: "Analytics model for session data"
+    description: "7-day moving average window of share value"
     columns:
       - name: date
         description: "Unique identifier for each stock price record"
@@ -18,7 +18,7 @@ models:
           - unique
           - not_null
   - name: price_momentum
-    description: "Analytics model for session data"
+    description: "Overall direction of share value in a 10-day period"
     columns:
       - name: date
         description: "Unique identifier for each stock price record"

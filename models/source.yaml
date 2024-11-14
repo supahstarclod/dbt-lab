@@ -8,4 +8,4 @@ sources:
     tables:
       - name: market_data
         identifier: market_data
-        description: "Session data including --"
+        description: "Market data of TSLA past 90 days"
