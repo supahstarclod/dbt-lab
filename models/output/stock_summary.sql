@@ -1,16 +1,16 @@
 WITH price_changes AS (
     SELECT 
-        stock, 
+        symbol, 
         date,
         close,
         -- Calculate the daily price change (difference from previous day)
-        LAG(close) OVER (PARTITION BY stock ORDER BY date) AS prev_close
+        LAG(close) OVER (PARTITION BY symbol ORDER BY date) AS prev_close
     FROM {{ ref("market_data") }}
-    WHERE stock = 'YOUR_STOCK'  -- Filter by stock
+    WHERE symbol = 'TSLA'  -- Filter by symbol
 ),
 gains_losses AS (
     SELECT
-        stock,
+        symbol,
         date,
         close,
         prev_close,
@@ -23,21 +23,21 @@ gains_losses AS (
             WHEN close < prev_close THEN prev_close - close
             ELSE 0
         END AS loss
-    FROM {{ ref("market_data") }}
+    FROM price_changes
     WHERE prev_close IS NOT NULL  -- Exclude the first row (no previous price)
 ),
 avg_gains_losses AS (
     SELECT 
-        stock,
+        symbol,
         date,
         -- Calculate the average gain and average loss over the last 14 periods (or adjust for your requirement)
-        AVG(gain) OVER (PARTITION BY stock ORDER BY date ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS avg_gain,
-        AVG(loss) OVER (PARTITION BY stock ORDER BY date ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS avg_loss
+        AVG(gain) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS avg_gain,
+        AVG(loss) OVER (PARTITION BY symbol ORDER BY date ROWS BETWEEN 13 PRECEDING AND CURRENT ROW) AS avg_loss
     FROM gains_losses
 ),
 rs_and_rsi AS (
     SELECT 
-        stock,
+        symbol,
         date,
         avg_gain,
         avg_loss,
@@ -52,9 +52,9 @@ rs_and_rsi AS (
     FROM avg_gains_losses
 )
 SELECT 
-    stock,
+    symbol,
     date,
     rsi
 FROM rs_and_rsi
 WHERE rsi IS NOT NULL  -- Exclude rows where RSI is not calculable (e.g., at the start with insufficient data)
-ORDER BY date DESC;
+ORDER BY date DESC
